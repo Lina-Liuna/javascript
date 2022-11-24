@@ -1,23 +1,15 @@
-var mysql = require('mysql12');
+var mysql = require('mysql2');
 
 var con = mysql.createConnection({
     host: "localhost",
-    user: "lina",
-    password: "lina"
+    user: "root",
+    password: "lina",
 });
 
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
+con.execute('select * from mysql.servers', function(err, results, fields) {
+    console.log(results); // results contains rows returned by server
+    console.log(fields); // fields contains extra meta data about results, if available
 
-con.connect(function(err){
-    if (err) throw err;
-    console.log("connected!");
-    con.query(sql, function(err, result){
-        if (err) throw err;
-        console.log("Result:" + result)
-    });
-
-});
-
+    // If you execute same statement again, it will be picked from a LRU cache
+    // which will save query preparation time and give better performance
+  });
